@@ -1,0 +1,36 @@
+location_id,location_name,building,floor,x,y,location_type
+L001,Main Entrance,Main Block,0,2,5,Entrance
+L002,Reception,Main Block,0,5,5,Reception
+L003,Main Lobby,Main Block,0,8,5,Junction
+L004,Admin Office,Main Block,0,8,9,Office
+L005,Auditorium,Main Block,0,13,5,Auditorium
+L006,Main Staircase Ground,Main Block,0,10,8,Staircase
+L007,Main Staircase First,Main Block,1,10,8,Staircase
+L008,First Floor Lobby,Main Block,1,8,5,Junction
+L009,Library,Main Block,1,5,5,Library
+L010,Seminar Hall,Main Block,1,5,9,Seminar Hall
+L011,Room 101,Main Block,1,2,5,Classroom
+L012,Room 102,Main Block,1,2,9,Classroom
+L013,Main Staircase Second,Main Block,2,10,8,Staircase
+L014,Second Floor Lobby,Main Block,2,8,5,Junction
+L015,Room 201,Main Block,2,5,5,Classroom
+L016,Room 202,Main Block,2,5,9,Classroom
+L017,Room 203,Main Block,2,2,5,Classroom
+L018,CSE Block Entrance,CSE Block,0,17,5,Entrance
+L019,CSE Lobby,CSE Block,0,20,5,Junction
+L020,CSE Staircase Ground,CSE Block,0,22,8,Staircase
+L021,CSE Staircase First,CSE Block,1,22,8,Staircase
+L022,CSE First Floor Lobby,CSE Block,1,20,5,Junction
+L023,Computer Lab 1,CSE Block,1,17,5,Laboratory
+L024,Computer Lab 2,CSE Block,1,17,9,Laboratory
+L025,Faculty Room CSE,CSE Block,1,20,9,Office
+L026,CSE Staircase Second,CSE Block,2,22,8,Staircase
+L027,CSE Second Floor Lobby,CSE Block,2,20,5,Junction
+L028,AI Lab,CSE Block,2,17,5,Laboratory
+L029,Project Lab,CSE Block,2,17,9,Laboratory
+L030,Canteen,Food Block,0,28,5,Canteen
+L031,Food Court,Food Block,0,31,5,Food Court
+L032,Sports Ground Gate,Outdoor,0,24,14,Outdoor Landmark
+L033,Central Courtyard,Outdoor,0,17,14,Outdoor Landmark
+L034,Parking Area,Outdoor,0,2,14,Parking
+L035,Accessible Ramp,Outdoor,0,12,12,Ramp
