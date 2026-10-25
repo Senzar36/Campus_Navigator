@@ -102,8 +102,8 @@ def create_campus_map():
                 y=[first["y"], second["y"]],
                 mode="lines",
                 line=dict(
-                    color="#CBD5E1",
-                    width=2,
+                    color="#71809E",
+                    width=1.8,
                 ),
                 hoverinfo="skip",
                 showlegend=False,
@@ -127,7 +127,7 @@ def create_campus_map():
                 y=route_y,
                 mode="lines",
                 line=dict(
-                    color="#2563EB",
+                    color="#8BA4FF",
                     width=5,
                 ),
                 name="Selected route",
@@ -160,10 +160,10 @@ def create_campus_map():
             ],
             marker=dict(
                 size=11,
-                color="#64748B",
+                color="#A9B6D0",
                 line=dict(
                     width=2,
-                    color="white",
+                    color="#E2E8F0",
                 ),
             ),
             hovertemplate=(
@@ -206,7 +206,7 @@ def create_campus_map():
                         color=color,
                         line=dict(
                             width=3,
-                            color="white",
+                            color="#E2E8F0",
                         ),
                     ),
                     name=label,
@@ -235,7 +235,7 @@ def create_campus_map():
                     symbol="diamond",
                     line=dict(
                         width=2,
-                        color="white",
+                        color="#E2E8F0",
                     ),
                 ),
                 name="Student agent",
@@ -255,10 +255,11 @@ def create_campus_map():
             t=50,
             b=20,
         ),
-        paper_bgcolor="white",
-        plot_bgcolor="#F8FAFC",
+        paper_bgcolor="#20283B",
+        plot_bgcolor="#2A3349",
         showlegend=True,
         legend=dict(
+            font=dict(color="#E2E8F0", size=12),
             orientation="h",
             yanchor="bottom",
             y=1.02,
@@ -392,6 +393,56 @@ def advance_simulation():
 
 @solara.component
 def Page():
+    solara.Style(
+        """
+        .v-card {
+            background-color: #222B3F !important;
+            color: #EEF2F8 !important;
+            border: 1px solid #35415A !important;
+            border-radius: 12px !important;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.14) !important;
+        }
+
+        .v-card-title,
+        .v-card-text,
+        .v-card-subtitle,
+        .prose,
+        .markdown,
+        label {
+            color: #EEF2F8 !important;
+        }
+
+        .v-label,
+        .v-field-label,
+        .v-card-text .text-medium-emphasis {
+            color: #B8C3D8 !important;
+        }
+
+        .v-field {
+            color: #EEF2F8 !important;
+        }
+
+        .v-field__input,
+        .v-select__selection-text,
+        .v-select__selection {
+            color: #EEF2F8 !important;
+        }
+
+        .v-field__outline {
+            color: #596782 !important;
+        }
+
+        .v-btn {
+            border-radius: 8px !important;
+            letter-spacing: 0.02em !important;
+        }
+
+        body {
+            background-color: #111827;
+        }
+        """
+    )
+
     async def automatic_movement():
         while simulation_running.value:
             await asyncio.sleep(1)
@@ -440,12 +491,20 @@ def Page():
         reset_simulation()
     with solara.Column(
         style={
-            "maxWidth": "1400px",
+            "maxWidth": "1500px",
             "margin": "0 auto",
-            "padding": "24px",
-            "fontFamily": "Arial, sans-serif",
-            "backgroundColor": "#F1F5F9",
+            "padding": "28px",
+            "fontFamily": "Inter, Segoe UI, sans-serif",
+            "background": (
+                "radial-gradient(ellipse at top left, "
+                "rgba(79, 70, 229, 0.12), transparent 45%), "
+                "radial-gradient(ellipse at top right, "
+                "rgba(124, 58, 237, 0.08), transparent 40%), "
+                "#111827"
+            ),
+            "color": "#F1F5F9",
             "minHeight": "100vh",
+            "boxSizing": "border-box",
         }
     ):
         solara.Markdown("# Campus Navigator")
