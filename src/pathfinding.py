@@ -8,7 +8,24 @@ class PathFinder:
         self.last_result = {}
 
     def heuristic(self, current_id, goal_id):
-        return 0
+        minimum_ratio = float("inf")
+
+        for location_id, connections in self.graph.adjacency_list.items():
+            for neighbor_id, weight in connections:
+                coordinate_distance = self.graph.calculate_distance(
+                    location_id, neighbor_id
+                )
+
+                if coordinate_distance > 0:
+                    ratio = weight / coordinate_distance
+                    minimum_ratio = min(minimum_ratio, ratio)
+
+        if minimum_ratio == float("inf"):
+            return 0
+
+        return minimum_ratio * self.graph.calculate_distance(
+            current_id, goal_id
+        )
 
     def reconstruct_path(self, came_from, current):
         path = [current]

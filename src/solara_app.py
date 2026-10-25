@@ -13,11 +13,6 @@ from graph import CampusGraph
 from pathfinding import PathFinder
 from navigation import Navigator
 
-
-# --------------------------------------------------
-# Load campus data and initialize navigation
-# --------------------------------------------------
-
 BASE_DIR = os.path.abspath(
     os.path.join(os.path.dirname(__file__), "..")
 )
@@ -29,11 +24,6 @@ graph = CampusGraph(
 
 pathfinder = PathFinder(graph)
 navigator = Navigator(pathfinder)
-
-
-# --------------------------------------------------
-# Build the campus network
-# --------------------------------------------------
 
 campus_network = nx.Graph()
 
@@ -53,11 +43,6 @@ for location_id, edges in graph.adjacency_list.items():
             weight=distance,
         )
 
-
-# --------------------------------------------------
-# Mesa agent and simulation model
-# --------------------------------------------------
-
 class StudentAgent(mesa.Agent):
     def __init__(self, model, path):
         super().__init__(model)
@@ -68,7 +53,6 @@ class StudentAgent(mesa.Agent):
         if self.current_step < len(self.path) - 1:
             self.current_step += 1
 
-
 class CampusModel(mesa.Model):
     def __init__(self, path):
         super().__init__()
@@ -76,11 +60,6 @@ class CampusModel(mesa.Model):
 
     def step(self):
         self.student.step()
-
-
-# --------------------------------------------------
-# Reactive application state
-# --------------------------------------------------
 
 location_labels = {
     f"{location['name']} ({location_id})": location_id
@@ -109,10 +88,6 @@ message = solara.reactive(
 )
 
 
-# --------------------------------------------------
-# Interactive campus map
-# --------------------------------------------------
-
 def create_campus_map():
     figure = go.Figure()
 
@@ -135,7 +110,6 @@ def create_campus_map():
             )
         )
 
-    # Draw the calculated route.
     if route.value:
         route_x = [
             graph.locations[node]["x"]
@@ -161,7 +135,6 @@ def create_campus_map():
             )
         )
 
-    # Draw all campus locations.
     location_ids = list(graph.locations.keys())
 
     figure.add_trace(
@@ -204,7 +177,6 @@ def create_campus_map():
         )
     )
 
-    # Highlight the starting point and destination.
     selected_locations = [
         (
             start_location.value,
@@ -246,7 +218,6 @@ def create_campus_map():
                 )
             )
 
-    # Display the current position of the Mesa agent.
     if simulation.value is not None:
         agent = simulation.value.student
 
@@ -276,7 +247,6 @@ def create_campus_map():
             )
         )
 
-    # Configure the interactive map.
     figure.update_layout(
         height=620,
         margin=dict(
@@ -308,10 +278,6 @@ def create_campus_map():
 
     return figure
 
-
-# --------------------------------------------------
-# Navigation actions
-# --------------------------------------------------
 
 def calculate_route():
     start_id = location_labels.get(start_location.value)
@@ -424,11 +390,6 @@ def advance_simulation():
             f"Destination reached: {agent_location['name']}."
         )
 
-
-# --------------------------------------------------
-# Solara page
-# --------------------------------------------------
-
 @solara.component
 def Page():
     async def automatic_movement():
@@ -489,8 +450,8 @@ def Page():
     ):
         solara.Markdown("# Campus Navigator")
         solara.Markdown(
-            "Plan a route through campus and simulate "
-            "a student's journey."
+            "Built using A* and Greedy best First Search algorithms for pathfinding, "
+            "and the Mesa framework for simulating a student navigating the campus."
         )
 
         with solara.Row(
@@ -499,7 +460,6 @@ def Page():
                 "gap": "20px",
             }
         ):
-            # Navigation sidebar.
             with solara.Column(
                 style={
                     "width": "320px",
@@ -581,7 +541,6 @@ def Page():
                             f"{max(len(agent.path) - 1, 0)} connections"
                         )
 
-            # Interactive campus map.
             with solara.Column(
                 style={
                     "flex": "1",

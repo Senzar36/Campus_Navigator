@@ -25,12 +25,21 @@ class Navigator:
                 return None, 0
             
             segment_cost = 0
+
             for j in range(len(segment) - 1):
-                for neighbor, weight in self.graph.adjacency_list[segment[j]]:
-                    if neighbor == segment[j+1]:
+                current_id = segment[j]
+                next_id = segment[j + 1]
+
+                for neighbor, weight in self.graph.adjacency_list[current_id]:
+                    if neighbor == next_id:
                         segment_cost += weight
                         break
-            
+                else:
+                    raise ValueError(
+                        f"Invalid route: no connection between "
+                        f"{current_id} and {next_id}"
+                    )
+              
             total_cost += segment_cost
 
             if i == 0:
