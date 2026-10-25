@@ -454,6 +454,29 @@ def Page():
         automatic_movement,
         dependencies=None,
     )
+    def start_movement():
+        if simulation.value is None:
+            message.value = "Calculate a route before starting."
+            return
+
+        agent = simulation.value.student
+
+        if agent.current_step >= len(agent.path) - 1:
+            message.value = "Reset the simulation to run again."
+            return
+
+        simulation_running.value = True
+        movement_task()
+
+    def pause_movement():
+        simulation_running.value = False
+        movement_task.cancel()
+        message.value = "Simulation paused."
+
+    def reset_movement():
+        simulation_running.value = False
+        movement_task.cancel()
+        reset_simulation()
     with solara.Column(
         style={
             "maxWidth": "1400px",
@@ -530,17 +553,24 @@ def Page():
                             " → ".join(route.value)
                         )
 
-                with solara.Card("Student simulation"):
-                    solara.Button(
-                        "Advance one step",
-                        on_click=advance_simulation,
-                        color="primary",
-                    )
+                    with solara.Card("Student simulation"):
+                        if simulation_running.value:
+                            solara.Button(
+                                "Pause",
+                                on_click=pause_movement,
+                            )
+                        else:
+                            solara.Button(
+                                "Start / Resume",
+                                on_click=start_movement,
+                                color="primary",
+                            )
 
-                    solara.Button(
-                        "Reset simulation",
-                        on_click=reset_simulation,
-                    )
+                        solara.Button(
+                            "Reset simulation",
+                            on_click=reset_movement,
+                        )
+
 
                     if simulation.value is not None:
                         agent = simulation.value.student

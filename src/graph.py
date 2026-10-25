@@ -43,7 +43,7 @@ class CampusGraph:
                         f"Connection references an unknown location: {loc1}, {loc2}"
                     )
 
-                distance = self.calculate_distance(loc1, loc2)
+                distance = float(row["distance"])
 
                 self.adjacency_list[loc1].append((loc2, distance))
                 self.adjacency_list[loc2].append((loc1, distance))

@@ -8,7 +8,7 @@ class PathFinder:
         self.last_result = {}
 
     def heuristic(self, current_id, goal_id):
-        return self.graph.calculate_distance(current_id, goal_id)
+        return 0
 
     def reconstruct_path(self, came_from, current):
         path = [current]
