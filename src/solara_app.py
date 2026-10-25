@@ -1,3 +1,4 @@
+import asyncio
 import os
 import sys
 
@@ -430,6 +431,29 @@ def advance_simulation():
 
 @solara.component
 def Page():
+    async def automatic_movement():
+        while simulation_running.value:
+            await asyncio.sleep(1)
+
+            if not simulation_running.value:
+                break
+
+            advance_simulation()
+
+            if simulation.value is None:
+                simulation_running.value = False
+                break
+
+            agent = simulation.value.student
+
+            if agent.current_step >= len(agent.path) - 1:
+                simulation_running.value = False
+                break
+
+    movement_task = solara.lab.use_task(
+        automatic_movement,
+        dependencies=None,
+    )
     with solara.Column(
         style={
             "maxWidth": "1400px",
