@@ -468,6 +468,43 @@ def Page():
     .campus-root .v-card__text .markdown, .campus-root .v-card__text .prose {
         color: #EAF0FC !important;
     }
+    /* Consistent typography for Solara Markdown and Vuetify widgets. */
+    .campus-root .v-card .vue-markdown,
+    .campus-root .v-card .vue-markdown *,
+    .campus-root .v-card .solara-markdown,
+    .campus-root .v-card .solara-markdown *,
+    .campus-root .v-card .markdown,
+    .campus-root .v-card .markdown *,
+    .campus-root .v-card .prose,
+    .campus-root .v-card .prose *,
+    .campus-root .v-card .v-card__text p,
+    .campus-root .v-card .v-card__text span:not(.v-btn__content),
+    .campus-root .v-card .v-card__text li {
+        color: #E8EFFB !important;
+    }
+    .campus-root .v-card .v-card__title,
+    .campus-root .v-card h1,
+    .campus-root .v-card h2,
+    .campus-root .v-card h3,
+    .campus-root .v-card strong {
+        color: #FFFFFF !important;
+    }
+    .campus-root .v-input .v-label,
+    .campus-root .v-input__details,
+    .campus-root .v-messages,
+    .campus-root .v-text-field__details {
+        color: #C4D0E6 !important;
+    }
+    .campus-root .v-select__selection,
+    .campus-root .v-select__selection-text,
+    .campus-root .v-input input,
+    .campus-root .v-field__input {
+        color: #F7F9FF !important;
+        -webkit-text-fill-color: #F7F9FF !important;
+    }
+    .campus-root .v-btn .v-btn__content { color: #FFFFFF !important; }
+    .v-menu__content .v-list-item__title,
+    .v-menu__content .v-list-item__content { color: #F7F9FF !important; }
     """)
 
     async def automatic_movement():
