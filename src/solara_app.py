@@ -102,7 +102,7 @@ def create_campus_map():
                 y=[first["y"], second["y"]],
                 mode="lines",
                 line=dict(
-                    color="#71809E",
+                    color="#8297B8",
                     width=1.8,
                 ),
                 hoverinfo="skip",
@@ -127,7 +127,7 @@ def create_campus_map():
                 y=route_y,
                 mode="lines",
                 line=dict(
-                    color="#8BA4FF",
+                    color="#A38BFF",
                     width=5,
                 ),
                 name="Selected route",
@@ -149,6 +149,7 @@ def create_campus_map():
             ],
             mode="markers+text",
             text=location_ids,
+            textfont=dict(color="#DCE6FA", size=11),
             textposition="top center",
             customdata=[
                 [
@@ -160,7 +161,7 @@ def create_campus_map():
             ],
             marker=dict(
                 size=11,
-                color="#A9B6D0",
+                color="#B5C8E8",
                 line=dict(
                     width=2,
                     color="#E2E8F0",
@@ -248,15 +249,18 @@ def create_campus_map():
         )
 
     figure.update_layout(
-        height=620,
+        height=590,
+        autosize=True,
+        font=dict(color="#E2E8F0", family="Segoe UI, sans-serif"),
+        hoverlabel=dict(bgcolor="#26334B", font_color="#F8FAFC"),
         margin=dict(
-            l=20,
-            r=20,
-            t=50,
-            b=20,
+            l=12,
+            r=12,
+            t=58,
+            b=12,
         ),
-        paper_bgcolor="#20283B",
-        plot_bgcolor="#2A3349",
+        paper_bgcolor="#253149",
+        plot_bgcolor="#2A3852",
         showlegend=True,
         legend=dict(
             font=dict(color="#E2E8F0", size=12),
@@ -393,90 +397,103 @@ def advance_simulation():
 
 @solara.component
 def Page():
-    solara.Style(
-        """
-        .v-card {
-            background-color: #222B3F !important;
-            color: #EEF2F8 !important;
-            border: 1px solid #35415A !important;
-            border-radius: 12px !important;
-            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.14) !important;
-        }
+    solara.Style("""
+    :root { color-scheme: dark; }
+    html, body, #app, #app > div, .v-application, .v-application--wrap,
+    .v-main, .v-main__wrap, main, .solara-page, .solara-content,
+    .solara-main, .solara-container, .container, .container-fluid {
+        background-color: #151D2E !important;
+    }
+    .campus-root .v-sheet, .campus-root .v-card,
+    .campus-root .theme--light.v-card {
+        background-color: #253149 !important; color: #EAF0FC !important;
+    }
+    .campus-root .v-card__text, .campus-root .v-card__title,
+    .campus-root .v-card p, .campus-root .v-card strong {
+        color: #EAF0FC !important;
+    }
+    .campus-root .v-card .v-input__slot, .campus-root .v-card .v-field {
+        background-color: #344460 !important;
+    }
+    .campus-root .v-card .v-btn:not(.primary) {
+        background: #354664 !important; color: #EDF3FF !important;
+    }
+    .campus-root .v-btn.primary { background: #7165D9 !important; }
+    .campus-root .v-card__title { letter-spacing: .01em !important; }
+    .campus-root .v-card__text { line-height: 1.55 !important; }
+    .campus-root .v-card { overflow: hidden; }
+    .v-menu__content .v-list, .v-menu__content .v-list-item {
+        background-color: #344460 !important; color: #F3F6FF !important;
+    }
 
-        .v-card-title,
-        .v-card-text,
-        .v-card-subtitle,
-        .prose,
-        .markdown,
-        label {
-            color: #EEF2F8 !important;
-        }
-
-        .v-label,
-        .v-field-label,
-        .v-card-text .text-medium-emphasis {
-            color: #B8C3D8 !important;
-        }
-
-        .v-field {
-            color: #EEF2F8 !important;
-        }
-
-        .v-field__input,
-        .v-select__selection-text,
-        .v-select__selection {
-            color: #EEF2F8 !important;
-        }
-
-        .v-field__outline {
-            color: #596782 !important;
-        }
-
-        .v-btn {
-            border-radius: 8px !important;
-            letter-spacing: 0.02em !important;
-        }
-
-        body {
-            background-color: #111827;
-        }
-        """
-    )
+    html, body, #app, .v-application, .v-main, .v-main__wrap,
+    .solara-page, .solara-content { background: #151D2E !important; }
+    body { margin: 0 !important; }
+    .v-application { color: #EAF0FC !important; }
+    .campus-root, .campus-root > div { color: #EAF0FC !important; }
+    .campus-root .v-card {
+        background: #253149 !important; color: #EAF0FC !important;
+        border: 1px solid #3A4A65 !important; border-radius: 16px !important;
+        box-shadow: 0 8px 26px rgba(5, 12, 25, .15) !important;
+    }
+    .campus-root .v-card__title {
+        color: #F5F7FF !important; font-size: 17px !important;
+        font-weight: 650 !important; white-space: normal !important;
+        overflow-wrap: anywhere !important;
+    }
+    .campus-root .v-card p, .campus-root .v-card strong,
+    .campus-root .v-card label, .campus-root .v-card .v-label,
+    .campus-root .v-card .v-input, .campus-root .v-card input,
+    .campus-root .v-card .v-select__selection,
+    .campus-root .v-card .v-select__selection-text,
+    .campus-root .v-card .v-icon { color: #EAF0FC !important; }
+    .campus-root .v-card .v-input__slot,
+    .campus-root .v-card .v-field {
+        background: #32425F !important; border-radius: 9px !important;
+    }
+    .campus-root .v-card .v-input__slot:before { border-color: #7789A5 !important; }
+    .v-menu__content, .v-list, .v-list-item {
+        background: #32425F !important; color: #F3F6FF !important;
+    }
+    .v-list-item__title { color: #F3F6FF !important; }
+    .campus-root .v-btn {
+        text-transform: none !important; letter-spacing: 0 !important;
+        font-weight: 600 !important; border-radius: 9px !important;
+    }
+    .campus-root .v-btn.primary { background: #6679E8 !important; }
+    .campus-root .js-plotly-plot, .campus-root .plot-container {
+        max-width: 100% !important;
+    }
+    .campus-root .v-card__text { color: #EAF0FC !important; }
+    .campus-root .v-card__text .markdown, .campus-root .v-card__text .prose {
+        color: #EAF0FC !important;
+    }
+    """)
 
     async def automatic_movement():
         while simulation_running.value:
             await asyncio.sleep(1)
-
             if not simulation_running.value:
                 break
-
             advance_simulation()
-
             if simulation.value is None:
                 simulation_running.value = False
                 break
-
             agent = simulation.value.student
-
             if agent.current_step >= len(agent.path) - 1:
                 simulation_running.value = False
                 break
 
-    movement_task = solara.lab.use_task(
-        automatic_movement,
-        dependencies=None,
-    )
+    movement_task = solara.lab.use_task(automatic_movement, dependencies=None)
+
     def start_movement():
         if simulation.value is None:
             message.value = "Calculate a route before starting."
             return
-
         agent = simulation.value.student
-
         if agent.current_step >= len(agent.path) - 1:
             message.value = "Reset the simulation to run again."
             return
-
         simulation_running.value = True
         movement_task()
 
@@ -489,124 +506,79 @@ def Page():
         simulation_running.value = False
         movement_task.cancel()
         reset_simulation()
-    with solara.Column(
-        style={
-            "maxWidth": "1500px",
-            "margin": "0 auto",
-            "padding": "28px",
-            "fontFamily": "Inter, Segoe UI, sans-serif",
-            "background": (
-                "radial-gradient(ellipse at top left, "
-                "rgba(79, 70, 229, 0.12), transparent 45%), "
-                "radial-gradient(ellipse at top right, "
-                "rgba(124, 58, 237, 0.08), transparent 40%), "
-                "#111827"
-            ),
-            "color": "#F1F5F9",
-            "minHeight": "100vh",
-            "boxSizing": "border-box",
-        }
-    ):
-        solara.Markdown("# Campus Navigator")
-        solara.Markdown(
-            "Built using A* and Greedy best First Search algorithms for pathfinding, "
-            "and the Mesa framework for simulating a student navigating the campus."
-        )
 
-        with solara.Row(
-            style={
-                "alignItems": "flex-start",
-                "gap": "20px",
-            }
-        ):
-            with solara.Column(
-                style={
-                    "width": "320px",
-                    "minWidth": "280px",
-                }
-            ):
+    steps = max(len(route.value) - 1, 0)
+    current_step = simulation.value.student.current_step if simulation.value is not None else 0
+    progress = round(current_step * 100 / steps) if steps else 0
+
+    with solara.Column(classes=["campus-root"], style={
+        "width": "100%", "maxWidth": "1600px", "margin": "0 auto",
+        "padding": "28px 28px 48px", "boxSizing": "border-box",
+        "minHeight": "100vh", "gap": "20px",
+        "fontFamily": "Segoe UI, Inter, sans-serif",
+        "background": "radial-gradient(circle at 80% 0%, #30315B 0%, transparent 35%), linear-gradient(145deg, #19263C, #151D2E 65%, #1B2440)",
+    }):
+        # A single header surface, rather than white header strips.
+        with solara.Card(classes=["campus-header"]):
+            with solara.Column(style={"gap": "2px", "padding": "4px 8px"}):
+                solara.Markdown("## ◈ Campus Navigator")
+                solara.Markdown("**Navigate your campus with confidence.**  ·  A* routing  ·  Mesa simulation")
+
+        # Main map gets priority; controls remain comfortably wide.
+        with solara.Row(style={
+            "width": "100%", "gap": "20px", "alignItems": "flex-start",
+            "flexWrap": "wrap", "background": "transparent",
+        }):
+            with solara.Column(style={
+                "flex": "1 1 310px", "maxWidth": "390px",
+                "minWidth": "280px", "gap": "18px",
+                "background": "transparent",
+            }):
                 with solara.Card("Plan your journey"):
-                    solara.Select(
-                        label="Starting location",
-                        value=start_location,
-                        values=location_options,
-                    )
+                    solara.Markdown("Select your starting point, destination and an optional stop.")
+                    solara.Select(label="Starting location", value=start_location, values=location_options)
+                    solara.Select(label="Destination", value=destination, values=location_options)
+                    solara.Select(label="Intermediate stop (optional)",
+                                  value=intermediate_stop, values=[""] + location_options)
+                    solara.Button("Find route →", on_click=calculate_route, color="primary")
 
-                    solara.Select(
-                        label="Destination",
-                        value=destination,
-                        values=location_options,
-                    )
-
-                    solara.Select(
-                        label="Intermediate stop (optional)",
-                        value=intermediate_stop,
-                        values=[""] + location_options,
-                    )
-
-                    solara.Button(
-                        "Find route",
-                        on_click=calculate_route,
-                        color="primary",
-                    )
-
-                with solara.Card("Route information"):
-                    solara.Markdown(
-                        f"**Status:** {message.value}"
-                    )
-
+                with solara.Card("Route details"):
+                    solara.Markdown(f"**Status:** {message.value}")
                     if route.value:
-                        solara.Markdown(
-                            f"**Total distance:** "
-                            f"{route_distance.value:.2f} units"
-                        )
+                        solara.Markdown(f"**Distance:** {route_distance.value:.2f} illustrative units")
+                        solara.Markdown(f"**Connections:** {steps}")
+                        solara.Markdown("**Waypoints**")
+                        for index, node_id in enumerate(route.value):
+                            node = graph.locations[node_id]
+                            prefix = "●" if index in (0, len(route.value) - 1) else "→"
+                            solara.Markdown(f"{prefix} **{node_id}** — {node['name']}")
+                    else:
+                        solara.Markdown("Your route will appear here after calculation.")
 
-                        solara.Markdown(
-                            f"**Connections:** "
-                            f"{len(route.value) - 1}"
-                        )
-
-                        solara.Markdown("**Route:**")
-
-                        solara.Markdown(
-                            " → ".join(route.value)
-                        )
-
-                    with solara.Card("Student simulation"):
-                        if simulation_running.value:
-                            solara.Button(
-                                "Pause",
-                                on_click=pause_movement,
-                            )
-                        else:
-                            solara.Button(
-                                "Start / Resume",
-                                on_click=start_movement,
-                                color="primary",
-                            )
-
-                        solara.Button(
-                            "Reset simulation",
-                            on_click=reset_movement,
-                        )
-
-
+                with solara.Card("Student simulation"):
+                    solara.Markdown(f"**Progress:** {current_step} / {steps} connections ({progress}%)")
                     if simulation.value is not None:
-                        agent = simulation.value.student
+                        agent_id = simulation.value.student.path[current_step]
+                        solara.Markdown(f"**Current:** {graph.locations[agent_id]['name']}")
+                    with solara.Row(style={"gap": "8px", "flexWrap": "wrap",
+                                           "background": "transparent"}):
+                        if simulation_running.value:
+                            solara.Button("Pause", on_click=pause_movement)
+                        else:
+                            solara.Button("Start / Resume", on_click=start_movement, color="primary")
+                        solara.Button("Reset", on_click=reset_movement)
 
-                        solara.Markdown(
-                            f"**Progress:** "
-                            f"{agent.current_step} / "
-                            f"{max(len(agent.path) - 1, 0)} connections"
-                        )
-
-            with solara.Column(
-                style={
-                    "flex": "1",
-                    "minWidth": "0",
-                }
-            ):
-                with solara.Card("Campus map"):
-                    solara.FigurePlotly(
-                        create_campus_map()
+            with solara.Column(style={
+                "flex": "3 1 650px", "minWidth": "320px",
+                "gap": "16px", "background": "transparent",
+            }):
+                with solara.Card("Interactive campus map"):
+                    solara.Markdown(
+                        "Hover over locations for details. Drag to pan and scroll to zoom."
+                    )
+                    solara.FigurePlotly(create_campus_map())
+                with solara.Card("About this map"):
+                    solara.Markdown(
+                        f"**{len(graph.locations)} locations** connected by campus paths. "
+                        "Distances are illustrative, not surveyed walking measurements."
                     )
