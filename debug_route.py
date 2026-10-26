@@ -1,14 +1,12 @@
 import os
 import sys
 
-# Allow Python to import modules from src/.
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
 
 from graph import CampusGraph
 from pathfinding import PathFinder
 from navigation import Navigator
 
-# Load the campus graph.
 graph = CampusGraph(
     "data/Campus_Navigator_Dataset.csv",
     "data/campus_connections.csv",
@@ -17,10 +15,6 @@ graph = CampusGraph(
 pathfinder = PathFinder(graph)
 navigator = Navigator(pathfinder)
 
-# Selected locations:
-# Start: Main Entrance (L001)
-# Intermediate: Project Lab (L029)
-# Destination: Sports Ground Gate (L032)
 stops = ["L001", "L029", "L032"]
 
 print("=" * 60)
@@ -36,7 +30,6 @@ if total_path is None:
     print("No valid route could be calculated.")
     raise SystemExit(1)
 
-# Display each required route segment independently.
 for index in range(len(stops) - 1):
     start_id = stops[index]
     goal_id = stops[index + 1]
@@ -62,7 +55,6 @@ for index in range(len(stops) - 1):
 
     print(f"Segment distance: {segment_cost:.2f}")
 
-# Display the complete combined route.
 print("\n" + "=" * 60)
 print("COMPLETE ROUTE")
 print("=" * 60)
@@ -74,7 +66,6 @@ for location_id in total_path:
 print(f"\nTotal distance: {total_cost:.2f}")
 print(f"Number of locations visited: {len(total_path)}")
 
-# Check that every consecutive pair is a valid graph connection.
 valid_route = True
 
 for current, following in zip(total_path, total_path[1:]):
