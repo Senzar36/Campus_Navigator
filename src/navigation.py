@@ -3,7 +3,7 @@ class Navigator:
         self.pathfinder = pathfinder
         self.graph = pathfinder.graph
 
-    def calculate_route(self, stops, algorithm='astar'):
+    def calculate_route(self, stops, algorithm='auto'):
         if len(stops) < 2:
             return None, 0
 
@@ -14,7 +14,9 @@ class Navigator:
             start_id = stops[i]
             goal_id = stops[i+1]
             
-            if algorithm == 'astar':
+            if algorithm == 'auto':
+                segment = self.pathfinder.auto_select(start_id, goal_id)
+            elif algorithm == 'astar':
                 segment = self.pathfinder.a_star(start_id, goal_id)
             elif algorithm == 'gbfs':
                 segment = self.pathfinder.greedy_best_first(start_id, goal_id)

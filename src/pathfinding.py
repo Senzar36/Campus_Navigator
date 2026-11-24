@@ -178,6 +178,46 @@ class PathFinder:
 
         return None
 
+    def auto_select(self, start_id, goal_id):
+     
+        self.a_star(start_id, goal_id)
+        astar_result = self.last_result.copy()
+
+        self.greedy_best_first(start_id, goal_id)
+        gbfs_result = self.last_result.copy()
+
+        valid_results = [
+            result
+            for result in (astar_result, gbfs_result)
+            if result["path"] is not None
+        ]
+
+        if not valid_results:
+            self.last_result = astar_result.copy()
+            self.last_result["comparison"] = {
+                "astar": astar_result,
+                "gbfs": gbfs_result,
+            }
+            return None
+
+        best_result = min(
+            valid_results,
+            key=lambda result: (
+                result["distance"],
+                result["execution_time_ms"],
+                result["nodes_explored"],
+            ),
+        )
+
+        self.last_result = best_result.copy()
+
+        self.last_result["comparison"] = {
+            "astar": astar_result,
+            "gbfs": gbfs_result,
+        }
+
+        return best_result["path"]
+
 
 if __name__ == "__main__":
     import os

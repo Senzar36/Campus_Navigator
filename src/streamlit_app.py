@@ -79,7 +79,7 @@ def calculate():
     if s.start == s.end and not stops:
         path, distance = [s.start], 0.0
     else:
-        path, distance = navigator.calculate_route(requested, algorithm='astar')
+        path, distance = navigator.calculate_route(requested, algorithm='auto')
     if not path:
         s.message = 'No route could be found.'
         return
