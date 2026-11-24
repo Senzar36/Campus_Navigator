@@ -91,24 +91,3 @@ path, cost = navigator.calculate_route(["L001", "L004", "L028"], algorithm="asta
 
 The new UI calls this same backend through `app_logic.find_route`, then passes the resulting `path` into `CampusModel(path)` for its Mesa step animation and into `campus_ui.create_map(...)` for visualization.
 
-## Test backend and UI integration
-
-From the project root:
-
-```powershell
-python -m unittest discover -s tests -p "test_*.py" -v
-```
-
-The original `test_navigation.py` covers route cases. `test_streamlit_integration.py` covers UI integration functions and plot creation without running the web server. `test_mesa_simulation.py` exercises the real Mesa model after you install dependencies.
-
-## Notes for your presentation
-
-- This is an **academic schematic**, not a surveyed campus map. The graph weights represent illustrative travel costs, not GPS walking metres.
-- The vertical coordinate penalty is represented inside the existing graph, and the map offsets floor panels only for visualization (it does not change any path weights).
-- A* is used for shortest weighted cost; Greedy Best-First may find a longer path because it prioritizes heuristic proximity over accumulated cost.
-- Automatic movement updates the Mesa student agent through Streamlit's timed `st.fragment` reruns, **not** through a blocking `while` loop.
-- Streamlit's session state holds the selected route and agent model independently for each browser session.
-
-## Optional map-only preview
-
-Double-click `campus_map_preview.html` to inspect a sample interactive Plotly route without starting Streamlit. This file is only a **sample visualization**; the interactive planner and moving Mesa agent run in the Streamlit app.
