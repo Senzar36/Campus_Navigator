@@ -59,7 +59,7 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
 [data-testid="stToolbar"] { right: 14px; }
 [data-testid="stMainBlockContainer"] {
   max-width: 1480px !important;
-  padding-top: 1.0rem !important;
+  padding-top: 4rem !important;
   padding-bottom: 3rem !important;
 }
 #MainMenu { visibility: hidden; }
