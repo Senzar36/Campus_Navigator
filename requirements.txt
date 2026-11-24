@@ -1,0 +1,5 @@
+streamlit>=1.41,<2
+Mesa==3.5.1
+networkx>=3.4,<4
+plotly>=6.0,<8
+pandas>=2.1,<4

@@ -1,0 +1,11 @@
+# Campus Navigator — Field Guide visual system
+[theme]
+base = "light"
+primaryColor = "#AD5033"
+backgroundColor = "#F6F4EE"
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#26352E"
+font = "sans serif"
+
+[server]
+headless = true
