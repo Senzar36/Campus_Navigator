@@ -253,7 +253,7 @@ def initialize_state():
     defaults = {
         "start_id": location_ids[0],
         "destination_id": default_destination,
-        "algo_choice": "astar",
+        "algo_choice": "auto",
         "stop_count": 0,
         "route_result": None,
         "simulation_model": None,
@@ -313,7 +313,7 @@ def process_route():
     try:
         result = find_route(
             graph, state["start_id"], state["destination_id"],
-            stops=chosen_stops, algorithm=state["algo_choice"],
+            stops=chosen_stops, algorithm="auto",
         )
     except ValueError as error:
         state["route_result"] = None
@@ -407,11 +407,7 @@ with planner:
                          format_func=location_label, key=f"stop_{i}")
         st.selectbox("Destination", location_ids, format_func=location_label,
                      key="destination_id")
-        st.selectbox("Route method", ["astar", "gbfs"],
-                     format_func=lambda algorithm: (
-                         "A* — shortest weighted path" if algorithm == "astar"
-                         else "Greedy Best-First — heuristic-based"
-                     ), key="algo_choice")
+        st.caption("Route method: Automatic algorithm selection")
         submitted = st.form_submit_button("Find route  →", type="primary",
                                           use_container_width=True)
     if submitted:
@@ -519,8 +515,39 @@ def explorer_panel():
     stat_columns = st.columns(4, gap="small")
     stat_columns[0].metric("Cost · units", f"{result['distance']:.2f}")
     stat_columns[1].metric("Connections", total_steps)
-    stat_columns[2].metric("Method", "A*" if result["algorithm"] == "astar" else "GBFS")
+    algorithm_labels = {
+        "astar": "A*",
+        "gbfs": "GBFS",
+        "auto": "Automatic"
+    }
+
+    selected_algorithms = result.get("selected_algorithms", [])
+    unique_algorithms = set(selected_algorithms)
+
+    if not unique_algorithms:
+        method = "N/A"
+    elif len(unique_algorithms) == 1:
+        selected = next(iter(unique_algorithms))
+        method = algorithm_labels.get(selected.lower(), selected)
+    else:
+        method = "Mixed"
+
+    stat_columns[2].metric("Method", method)
     stat_columns[3].metric("Completed", f"{progress}%")
+    with st.expander("Automatic algorithm selection details"):
+        for index, segment in enumerate(result.get("selected_results", []), start=1):
+            name = segment["algorithm"]
+            label = algorithm_labels.get(name.lower(), name)
+
+            st.write(f"**Segment {index}: {label}**")
+            st.write(f"Distance: {segment['distance']:.2f} units")
+            st.write(f"Nodes explored: {segment['nodes_explored']}")
+            st.write(f"Search time: {segment['execution_time_ms']:.4f} ms")
+
+        st.divider()
+        st.write("**Total search effort (both algorithms)**")
+        st.write(f"Nodes explored: {result['nodes_explored']}")
+        st.write(f"Search time: {result['execution_time_ms']:.4f} ms")
 
     st.markdown("""
     <div class="sim-bar">

@@ -88,7 +88,33 @@ class TestNavigation(unittest.TestCase):
         ]
 
         with self.assertRaisesRegex(ValueError, 'no connection'):
-            self.nav.calculate_route(['L001', 'L005'])
+            self.nav.calculate_route(['L001', 'L005'], algorithm='astar')
+
+        def test_automatic_algorithm_selection(self):
+            path = self.pf.auto_select('L001', 'L005')
+
+            result = self.pf.last_result
+            comparison = result["comparison"]
+
+            candidates = [
+                item for item in comparison.values()
+                if item["path"] is not None
+            ]
+
+            expected = min(
+                candidates,
+                key=lambda item: (
+                    item["distance"],
+                    item["execution_time_ms"],
+                    item["nodes_explored"]
+                )
+            )
+
+            self.assertIsNotNone(path)
+            self.assertEqual(path, expected["path"])
+            self.assertEqual(result["algorithm"], expected["algorithm"])
+            self.assertEqual(result["distance"], expected["distance"])
+            self.assertAlmostEqual(result["distance"], 11.0)
 
 if __name__ == '__main__':
     unittest.main()

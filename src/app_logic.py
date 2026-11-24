@@ -12,18 +12,24 @@ class TrackingPathFinder(PathFinder):
     def __init__(self, graph: CampusGraph):
         super().__init__(graph)
         self.segment_results = []
+        self.selected_results = []
 
     def _save_result(self, algorithm, path, distance, explored, start_time):
         super()._save_result(algorithm, path, distance, explored, start_time)
         self.segment_results.append(dict(self.last_result))
 
+    def auto_select(self, start_id, goal_id):
+        path = super().auto_select(start_id, goal_id)
+        self.selected_results.append(dict(self.last_result))
+        return path
+
 
 def find_route(graph: CampusGraph, start_id: str, destination_id: str,
-               stops: list[str] | None = None, algorithm: str = "astar") -> dict:
+               stops: list[str] | None = None, algorithm: str = "auto") -> dict:
     """Validate and run an existing Navigator search; return data for the UI."""
     stops = list(stops or [])
-    if algorithm not in {"astar", "gbfs"}:
-        raise ValueError("Choose A* or Greedy Best-First Search.")
+    if algorithm not in {"auto", "astar", "gbfs"}:
+        raise ValueError("Invalid routing algorithm.")
     if not start_id or not destination_id:
         raise ValueError("Select a starting location and a destination.")
 
@@ -36,6 +42,8 @@ def find_route(graph: CampusGraph, start_id: str, destination_id: str,
             "requested_stops": requested, "algorithm": algorithm,
             "nodes_explored": 0, "execution_time_ms": 0.0,
             "segment_results": [],
+            "selected_results": [],
+            "selected_algorithms": [],
         }
     if len(set(requested)) != len(requested):
         raise ValueError("Start, destination and intermediate stops must be different.")
@@ -44,6 +52,11 @@ def find_route(graph: CampusGraph, start_id: str, destination_id: str,
     path, cost = Navigator(pf).calculate_route(requested, algorithm=algorithm)
     if not path:
         raise ValueError("No connected route was found for these locations.")
+    selected_results = (
+        pf.selected_results if algorithm == "auto"
+        else pf.segment_results
+    )
+
     return {
         "path": path,
         "distance": cost,
@@ -52,6 +65,10 @@ def find_route(graph: CampusGraph, start_id: str, destination_id: str,
         "nodes_explored": sum(m["nodes_explored"] for m in pf.segment_results),
         "execution_time_ms": sum(m["execution_time_ms"] for m in pf.segment_results),
         "segment_results": pf.segment_results,
+        "selected_results": selected_results,
+        "selected_algorithms": [
+            m["algorithm"] for m in selected_results
+        ],
     }
 
 

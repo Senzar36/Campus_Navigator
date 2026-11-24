@@ -29,7 +29,9 @@ class TestStreamlitIntegration(unittest.TestCase):
         path = result["path"]
         self.assertLess(path.index("L004"), path.index("L009"))
         self.assertLess(path.index("L009"), path.index("L028"))
-        self.assertEqual(len(result["segment_results"]), 3)
+        self.assertEqual(len(result["segment_results"]), 6)
+        self.assertEqual(len(result["selected_results"]), 3)
+        self.assertEqual(len(result["selected_algorithms"]), 3)
 
     def test_invalid_duplicate_selection(self):
         with self.assertRaisesRegex(ValueError, "different"):
