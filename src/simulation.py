@@ -1,4 +1,3 @@
-"""Mesa student movement, separated from the former Solara UI."""
 import mesa
 
 

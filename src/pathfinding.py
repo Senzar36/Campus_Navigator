@@ -83,7 +83,6 @@ class PathFinder:
         while open_set:
             _, queued_g, current = heapq.heappop(open_set)
 
-            # Ignore queue entries made outdated by a better route.
             if queued_g != g_score[current]:
                 continue
 
