@@ -1,8 +1,4 @@
-"""A light, cartographic Plotly campus plan for the Streamlit frontend.
 
-The coordinates are schematic. On the "All floors" view, separate panels
-prevent locations on different floors from overlapping on screen.
-"""
 from __future__ import annotations
 
 import html
@@ -38,11 +34,7 @@ def floor_name(floor: int) -> str:
 def create_map(graph, path=None, current_step=None, floor_filter=None,
                start_id=None, destination_id=None, required_stops=None,
                show_labels=True):
-    """Render all campus links, the selected route, and the student marker.
-
-    The function signature is unchanged, so existing integration tests and
-    callers continue to work after the visual redesign.
-    """
+    
     path = list(path or [])
     required_stops = list(required_stops or [])
     locations = graph.locations
@@ -72,7 +64,6 @@ def create_map(graph, path=None, current_step=None, floor_filter=None,
 
     figure = go.Figure()
 
-    # Distinct, almost-paper-like panels make floors legible at first glance.
     if all_floors:
         for floor in floors:
             dx, dy = offset(floor)
@@ -93,7 +84,7 @@ def create_map(graph, path=None, current_step=None, floor_filter=None,
                 font=dict(family="Arial", size=11, color="#53665A"),
             )
 
-    # Draw only genuine edges from the existing backend graph.
+    
     ordinary_x, ordinary_y = [], []
     transition_x, transition_y = [], []
     seen_edges = set()
@@ -123,7 +114,7 @@ def create_map(graph, path=None, current_step=None, floor_filter=None,
             name="Between floors", hoverinfo="skip",
         ))
 
-    # Route highlight, with dotted segments for vertical floor changes.
+    
     route_x, route_y = [], []
     vertical_x, vertical_y = [], []
     for src, dst in zip(path, path[1:]):
@@ -153,7 +144,7 @@ def create_map(graph, path=None, current_step=None, floor_filter=None,
             name="Route · floor change", hoverinfo="skip",
         ))
 
-    # Nodes grouped by building, preserving real location metadata on hover.
+    
     for building in sorted({node["building"] for node in locations.values()}):
         identifiers = [key for key, node in locations.items()
                        if node["building"] == building and visible(key)]

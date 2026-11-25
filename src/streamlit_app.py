@@ -1,11 +1,3 @@
-"""Campus Navigator / Field Guide edition.
-
-A Streamlit user interface connected directly to the original campus graph,
-A* / Greedy Best-First search, ordered-stop navigation, and Mesa simulation.
-
-Run from the project root:
-    python -m streamlit run src/streamlit_app.py
-"""
 from __future__ import annotations
 
 import html
@@ -33,8 +25,6 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# This is a completely new light, editorial / wayfinding design.
-# Backend calculations live in app_logic.py + the original backend modules.
 CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
@@ -352,9 +342,6 @@ def reset_simulation():
         state["sim_running"] = False
 
 
-# -------------------------------------------------------
-# Identity / introduction
-# -------------------------------------------------------
 st.markdown("""
 <div class="masthead">
   <div class="wordmark">
@@ -380,9 +367,6 @@ st.markdown("""
 
 planner, explorer = st.columns([0.92, 1.78], gap="large")
 
-# -------------------------------------------------------
-# Left column: journey inputs + project context
-# -------------------------------------------------------
 with planner:
     st.markdown("""
     <div class="section-kicker">01 / YOUR JOURNEY</div>
@@ -444,7 +428,7 @@ The map is a visual layer. Calculations still come from the original Python back
 
 @st.fragment(run_every="1s")
 def explorer_panel():
-    """Refresh only the live map / simulation, rather than reloading the form."""
+    
     state = st.session_state
     result = state["route_result"]
     model = state["simulation_model"]
@@ -527,8 +511,8 @@ def explorer_panel():
     if not unique_algorithms:
         method = "N/A"
     elif len(unique_algorithms) == 1:
-        selected = next(iter(unique_algorithms))
-        method = algorithm_labels.get(selected.lower(), selected)
+        selected_algorithm = next(iter(unique_algorithms))
+        method = algorithm_labels.get(selected_algorithm.lower(), selected_algorithm)
     else:
         method = "Mixed"
 

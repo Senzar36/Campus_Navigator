@@ -1,4 +1,4 @@
-"""UI-facing routing adapter. Existing graph/navigation/pathfinding remain unchanged."""
+
 from __future__ import annotations
 
 from graph import CampusGraph
@@ -7,7 +7,7 @@ from pathfinding import PathFinder
 
 
 class TrackingPathFinder(PathFinder):
-    """Record each completed search, including multi-stop segment metrics."""
+    
 
     def __init__(self, graph: CampusGraph):
         super().__init__(graph)
@@ -26,7 +26,7 @@ class TrackingPathFinder(PathFinder):
 
 def find_route(graph: CampusGraph, start_id: str, destination_id: str,
                stops: list[str] | None = None, algorithm: str = "auto") -> dict:
-    """Validate and run an existing Navigator search; return data for the UI."""
+    
     stops = list(stops or [])
     if algorithm not in {"auto", "astar", "gbfs"}:
         raise ValueError("Invalid routing algorithm.")
@@ -74,7 +74,7 @@ def find_route(graph: CampusGraph, start_id: str, destination_id: str,
 
 def compare_routes(graph: CampusGraph, start_id: str, destination_id: str,
                    stops: list[str] | None = None) -> list[dict]:
-    """Run both original pathfinding algorithms on the same requirements."""
+    
     results = []
     for algorithm, label in (("astar", "A* Search"), ("gbfs", "Greedy Best-First")):
         result = find_route(graph, start_id, destination_id, stops, algorithm)

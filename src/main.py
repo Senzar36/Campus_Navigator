@@ -28,7 +28,7 @@ def main():
         print(f"Error loading data: {e}")
         sys.exit(1)
 
-    print("\n=== CAMPUS NAVIGATOR ===")
+    print("\n   CAMPUS NAVIGATOR   ")
 
     if args.list:
         display_locations(g)
